@@ -1,22 +1,42 @@
 <html>
 <head>
-	<title> Chat Application using WebSockets </title>
+	<title> Chat Application with WebSockets </title>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
 
 <body>
 
-<h1>Chat History</h1>
-<div id="chatHistory">
+<h1 class="text-center">Chat Application</h1>
+<div class="container">
+	<div class="row">
+		<div class="col-md-6 col-md-offset-3">
+		<form id="username_form">
+		  <div class="form-group">
+		    <label for="username">Username</label>
+		    <input type="text" class="form-control" id="username" placeholder="Enter your username">
+		  </div>
+		  <button type="button" class="btn btn-primary" id="start_chatting_button">Start chatting</button>
+		</form>
+		</div>
+	</div>
 </div>
 
-<form id="form">
-  Send to chat:
-  <input type="text" name="message" id="message">
-  <input type="submit" value="Send">
-</form> 
-
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-<script src="chat_client.js"></script>
+<script>
+	$("#start_chatting_button").click(function() {
+		var username = $("#username").val();
+		if (!username) {
+			alert("Enter a username!")
+			return;
+		}
+		current_url = window.location.href;
+		file_name = current_url.split("/").pop();
+		base_url = current_url.split(file_name)[0];
+		chat_url = base_url + 'chat.html?username=' + username;
+  		window.location.href = chat_url;
+	});
+</script>
 </body>
 </html>

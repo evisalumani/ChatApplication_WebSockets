@@ -35,15 +35,14 @@ function originIsAllowed(origin) {
   return true;
 }
 
-function sendToAllClient(message) {
+function printClient(clientConnection) {
+    console.log(`Client: ${clientConnection.remoteAddress}; Username: ${clientConnection.username}`);
+}
+
+function sendToAllClients(message) {
     clients.forEach(function(client) {
-        if (message.type === 'utf8') {
-            console.log('Received Message: ' + message.utf8Data);
-            client.sendUTF(message.utf8Data);
-        } else if (message.type === 'binary') {
-            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
-            client.sendBytes(message.binaryData);
-        }
+        client.sendUTF(JSON.stringify(message));
+        // client.sendBytes(message.binaryData); // in case of binary data
     });
 }
 
@@ -69,7 +68,33 @@ wsServer.on('request', function(request) {
 
     // when client has sent a message
     connection.on('message', function(message) {
-        sendToAllClient(message);
+        if (message.type === 'utf8') {
+            console.log('Received Message: ' + message.utf8Data);
+
+            try {
+                var data = JSON.parse(message.utf8Data);
+                data = JSON.parse(message.utf8Data);
+        
+                if (data.messageType === "send_username") {
+                    console.log("onmessage: send_username");
+                    // save username for current client
+                    current_client = clients[newClientIndex];
+                    current_client.username = data.message; // add username field
+                } else if (data.messageType === "send_chatMessage") {
+                    console.log("onmessage: send_chatMessage");
+                    sendToAllClients(data);
+                } else {
+                    console.log("undefined message type");
+                }
+            } catch (e) {
+                console.log('Invalid JSON: ', message.utf8Data);
+                return;
+            }
+            
+        } else if (message.type === 'binary') {
+            console.log('Received Binary Message of ' + message.binaryData.length + ' bytes');
+        }
+        
     });
 
     connection.on('close', function(reasonCode, description) {
