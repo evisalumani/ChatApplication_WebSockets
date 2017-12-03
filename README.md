@@ -8,11 +8,12 @@ A Chat application using WebSockets
 
 ## Details:
 Messages sent through the web socket are of 3 types:
-1. send_username: whenever a new client gets connected with the server (upon submitting a username)
-2. send_chatMessage: whenever e client submits a new message
-3. send_history: whenever a client gets connected with the server, and has not received previous chat history (e.g. if 2 clients have previously communicated, and a new 3rd one gets connected)  
+1. *send_username*: whenever a new client gets connected with the server (upon submitting a username)
+2. *send_chatMessage*: whenever e client submits a new message
+3. *send_history*: whenever a client gets connected with the server, and has not received previous chat history (e.g. if 2 clients have previously communicated, and a new 3rd one gets connected)  
 
 Message Structure (Examples):
+```
 {
   "messageType": "send_username",
   "message": "testuser"
@@ -36,3 +37,4 @@ Message Structure (Examples):
     }
   ]
 }
+```
