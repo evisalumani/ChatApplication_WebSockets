@@ -41,7 +41,7 @@ function printClient(clientConnection) {
 
 function sendToAllClients(message) {
     clients.forEach(function(client) {
-        client.sendUTF(JSON.stringify(message));
+        client.sendUTF(message);
         // client.sendBytes(message.binaryData); // in case of binary data
     });
 }
@@ -61,9 +61,9 @@ wsServer.on('request', function(request) {
     // keep track of connections
     var newClientIndex = clients.push(connection) - 1;
 
-    // TODO: fix code to send back chat history
+    // send chat history (if any) to newly connected client
     if (history.length > 0) {
-        connection.sendUTF(JSON.stringify({ type: 'history', data: history} ));
+        connection.sendUTF(JSON.stringify({"messageType": "send_history", "message": history}));
     }
 
     // when client has sent a message
@@ -82,7 +82,8 @@ wsServer.on('request', function(request) {
                     current_client.username = data.message; // add username field
                 } else if (data.messageType === "send_chatMessage") {
                     console.log("onmessage: send_chatMessage");
-                    sendToAllClients(data);
+                    history.push(JSON.stringify(data)); // update message history
+                    sendToAllClients(JSON.stringify(data));
                 } else {
                     console.log("undefined message type");
                 }
