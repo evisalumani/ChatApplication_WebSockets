@@ -6,15 +6,31 @@
 
 <body>
 
-<h1>Chat History</h1>
-<div id="chatHistory">
+<h1 class="text-center">Chat History</h1>
+<!-- <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Panel title</h3>
+  </div>
+  <div class="panel-body">
+    Panel content
+  </div>
+</div> -->
+
+<div class="container" id="chatHistory">
 </div>
 
-<form id="form">
-  Send to chat:
-  <input type="text" name="message" id="message">
-  <input type="submit" value="Send">
-</form> 
+<div class="row">
+	<div class="col-md-6 col-md-offset-3 text-center">
+		<form id="form">
+		<div class="input-group">
+	      <input type="text" class="form-control" id="message" placeholder="Your message...">
+	      <span class="input-group-btn">
+	        <button class="btn btn-primary" type="submit">Send</button>
+	      </span>
+	    </div>
+	    </form>
+	</div>
+</div>
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>

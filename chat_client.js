@@ -25,7 +25,20 @@ $(document).ready(function() {
         console.log(evt.data);
         try {
             var jsonData = JSON.parse(evt.data);
-            chatHistoryDiv.append(`<p>${jsonData.from}: ${jsonData.message}</p>`);
+
+            var msgDateTime = new Date(jsonData.datetime);
+            var datetimeStr = `${msgDateTime.toLocaleDateString('de')} ${msgDateTime.toLocaleTimeString('de')}`;
+            var leftOrRightText = username == jsonData.from ? "pull-right" : "";
+            var labelColor = username == jsonData.from ? "label-primary" : "label-info";
+            var messageSection = `
+                                <div class="row ${leftOrRightText}" >
+                                <div class="col-md-12">
+                                    <h4>${jsonData.from} <small>${datetimeStr}</small></h4>
+                                    <p><span class="label ${labelColor}">${jsonData.message}</span></p>
+                                </div>
+                                </div>
+                            `;
+            chatHistoryDiv.append(messageSection);
         } catch (e) {
           console.log('Invalid JSON: ', evt.data);
           return;
