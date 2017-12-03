@@ -28,13 +28,15 @@ $(document).ready(function() {
 
             var msgDateTime = new Date(jsonData.datetime);
             var datetimeStr = `${msgDateTime.toLocaleDateString('de')} ${msgDateTime.toLocaleTimeString('de')}`;
-            var leftOrRightText = username == jsonData.from ? "pull-right" : "";
+            var leftOrRightText = username == jsonData.from ? "col-md-6 col-md-offset-6" : "col-md-6";
             var labelColor = username == jsonData.from ? "label-primary" : "label-info";
             var messageSection = `
-                                <div class="row ${leftOrRightText}" >
-                                <div class="col-md-12">
+                                <div class="container">
+                                <div class="row" >
+                                <div class="${leftOrRightText}">
                                     <h4>${jsonData.from} <small>${datetimeStr}</small></h4>
                                     <p><span class="label ${labelColor}">${jsonData.message}</span></p>
+                                </div>
                                 </div>
                                 </div>
                             `;
